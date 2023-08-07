@@ -42,9 +42,13 @@ module.exports.parse = async (
       config.proxies.splice(i, 1);
     } else {
       // add sni's to proxies
-      proxy.sni = "zoom.us";
+      if (proxy.type == "trojan") {
+        proxy.sni = "zoom.us";
+      }
 
       if (proxy.type == "vmess") {
+        proxy["tls"] = true;
+        proxy.servername = "zoom.us";
         proxy["ws-opts"] = {
           headers: {
             Host: "zoom.us",
