@@ -1,0 +1,1 @@
+https://raw.githubusercontent.com/mahdibland/SSAggregator/master/sub/sub_merge_yaml.yml
