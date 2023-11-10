@@ -25,6 +25,13 @@ module.exports.parse = async (
 
       if (proxy.type == "vmess") {
         proxy.servername = "zoom.us";
+        proxy.tls = true;
+      }
+
+      if (proxy["ws-opts"]) {
+        proxy["ws-opts"]["headers"] = {
+          Host: "zoom.us",
+        };
       }
     }
   }
