@@ -4,6 +4,7 @@ module.exports.parse = async (
   { name, url, interval, selected }
 ) => {
   let config = yaml.parse(raw);
+  const host = "zoom.us";
 
   for (let i = config.proxies.length - 1; i >= 0; i--) {
     const proxy = config.proxies[i];
@@ -20,23 +21,22 @@ module.exports.parse = async (
     if (proxy.type == "ss") {
       // removes ss proxies
       config.proxies.splice(i, 1);
-    } else {
-      // add sni's to proxies
-      if (proxy.type == "trojan") {
-        proxy.sni = "zoom.us";
-      }
+    }
+    // add sni's to proxies
+    if (proxy.type == "trojan") {
+      proxy.sni = host;
+    }
 
-      if (proxy.type == "vmess") {
-        proxy.servername = "zoom.us";
+    if (proxy.type == "vmess") {
+      proxy.servername = host;
 
-        if (!proxy.tls) config.proxies.splice(i, 1);
-      }
+      if (!proxy.tls) config.proxies.splice(i, 1);
+    }
 
-      if (proxy["ws-opts"]) {
-        proxy["ws-opts"]["headers"] = {
-          Host: "zoom.us",
-        };
-      }
+    if (proxy["ws-opts"]) {
+      proxy["ws-opts"]["headers"] = {
+        Host: "zoom.us",
+      };
     }
   }
 
