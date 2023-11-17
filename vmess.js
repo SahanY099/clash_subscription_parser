@@ -4,7 +4,6 @@ module.exports.parse = async (
   { name, url, interval, selected }
 ) => {
   let config = yaml.parse(raw);
-  const ssProxyNames = [];
 
   for (let i = config.proxies.length - 1; i >= 0; i--) {
     const proxy = config.proxies[i];
@@ -13,9 +12,13 @@ module.exports.parse = async (
       proxy.name = "H " + proxy.name;
     }
 
+    // remove proxies with invalid ports
+    if (isNaN(proxy.port)) {
+      config.proxies.splice(i, 1);
+    }
+
     if (proxy.type == "ss") {
       // removes ss proxies
-      ssProxyNames.push(proxy.name);
       config.proxies.splice(i, 1);
     } else {
       // add sni's to proxies
