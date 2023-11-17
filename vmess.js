@@ -28,7 +28,8 @@ module.exports.parse = async (
 
       if (proxy.type == "vmess") {
         proxy.servername = "zoom.us";
-        proxy.tls = true;
+
+        if (!proxy.tls) config.proxies.splice(i, 1);
       }
 
       if (proxy["ws-opts"]) {
