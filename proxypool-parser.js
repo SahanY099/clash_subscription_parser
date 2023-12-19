@@ -13,6 +13,10 @@ module.exports.parse = async (
       proxy.name = "H " + proxy.name;
     }
 
+    if (!proxy.name) {
+      proxy.name = `${proxy.server} - ${i}`;
+    }
+
     // remove proxies with invalid ports
     if (isNaN(proxy.port)) {
       config.proxies.splice(i, 1);
