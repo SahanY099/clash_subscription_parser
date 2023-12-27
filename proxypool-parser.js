@@ -6,15 +6,23 @@ module.exports.parse = async (
   let config = yaml.parse(raw);
   const host = "zoom.us";
 
+  const proxyNames = [];
+
   for (let i = config.proxies.length - 1; i >= 0; i--) {
     const proxy = config.proxies[i];
 
-    if (proxy.name.includes("198.244.252.93")) {
-      proxy.name = "H " + proxy.name;
-    }
+    proxyNames.push(proxy.name);
 
     if (!proxy.name) {
       proxy.name = `${proxy.server} - ${i}`;
+    }
+
+    if (proxyNames.includes(proxy.name)) {
+      proxy.name = `${proxy.name} - ${i}`;
+    }
+
+    if (proxy.name.includes("198.244.252.93")) {
+      proxy.name = "H " + proxy.name;
     }
 
     // remove proxies with invalid ports
