@@ -23,6 +23,8 @@ module.exports.parse = async (
     }
 
     if (proxy.type == "ss") config.proxies.splice(i, 1);
+    if (proxy.type == "hysteria") config.proxies.splice(i, 1);
+    if (proxy.type == "hysteria2") config.proxies.splice(i, 1);
     if (proxy.type == "ssr") config.proxies.splice(i, 1);
 
     // add sni's to proxies
@@ -38,7 +40,7 @@ module.exports.parse = async (
 
     if (proxy["ws-opts"]) {
       proxy["ws-opts"]["headers"] = {
-        Host: "zoom.us",
+        Host: host,
       };
     }
   }
